@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Central Repuestos Villalobos - Orden de Reparación</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=3.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+    <!-- Panel superior de búsqueda y botones -->
+    <div class="panel-buscadores">
+        <div class="caja-busqueda">
+            <div>
+                <label>RUT Cliente:</label>
+                <input type="text" id="buscar_rut" placeholder="Ej: 12.345.678-9">
+            </div>
+            <div>
+                <label>N° Orden:</label>
+                <input type="number" id="buscar_orden" placeholder="Ej: 6282">
+            </div>
+        </div>
+        <div class="caja-controles">
+            <button id="btn_imprimir" class="btn-oculto" style="background: #007bff;">🖨️ Imprimir Hoja</button>
+            <button id="btn_pdf" class="btn-oculto" style="background: #17a2b8;">📄 Descargar PDF</button>
+            <button id="btn_reiniciar" style="background: #ffc107; color: #000;">🔄 Reiniciar</button>
+            <button id="btn_apagar" style="background: #dc3545;">🛑 Apagar Server</button>
+        </div>
+    </div>
+
+    <!-- Contenedor principal de llenado -->
+    <div class="hoja-presupuesto" id="boleta_pdf">
+        
+        <div class="header-talonario">
+            <!-- Izquierda: Marcas y Datos de la empresa -->
+            <div class="header-info-empresa">
+                <div class="marcas-superiores">
+                    <span>Electrolux</span>
+                    <span>mademsa</span>
+                    <span>Fensa</span>
+                    <span>Oster</span>
+                    <span>Ursus Trotter</span>
+                    <b>MULTI MARCAS</b>
+                </div>
+                <h2>CENTRAL REPUESTOS VILLALOBOS SpA</h2>
+                
+                <div class="sub-footer-empresa">
+                    <!-- LOGO DE LA EMPRESA (Asegúrate de guardar tu imagen como logo.png en la carpeta static) -->
+                    <div class="logo-recuadro">
+                        <img src="/static/logo.png" alt="Logo Central Repuestos">
+                    </div>
+                    <div class="comuna-wsp">
+                        <p class="rut-empresa">R.U.T.: 77.078.841-2</p>
+                        <p>VENTA DE REPUESTOS DE LINEA BLANCA</p>
+                        <p>SERVICIO TECNICO DE ELECTRODOMESTICOS</p>
+                        <p>Miraflores N° 981 - Local 2 - Temuco</p>
+                        <p>Celular: 9 9628 7333</p>
+                        <p>Whatsapp: +56 95992 8846</p>
+                        <p>Telefono Fijo: 452 73 65 73</p>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- Centro: Número de Orden en Rojo -->
+            <div class="header-n-orden">
+                <span class="etiqueta-n">Nº</span>
+                <span id="numero_orden_display" class="numero-rojo">00000</span>
+            </div>
+
+            <!-- Derecha: Título y Tabla de Status / Fecha / Tec -->
+            <div class="header-derecha">
+                <div class="titulo-presupuesto">
+                    PRESUPUESTO - CONTRATO SERVICIOS<br>Y RECIBO DE REPARACION
+                </div>
+                <table class="tabla-status">
+                    <thead>
+                        <tr>
+                            <th>STATUS</th>
+                            <th>FECHA</th>
+                            <th>TEC.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                        <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    <div class="panel-inferior">
+        <button id="btn_guardar">💾 GUARDAR ORDEN EN BASE DE DATOS</button>
+    </div>
+
+    <script src="{{ url_for('static', filename='main.js') }}?v=3.0"></script>
+</body>
+</html>

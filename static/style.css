@@ -1,0 +1,270 @@
+/* ==================== VISTA EN PANTALLA WEB (GRANDE Y CLARA) ==================== */
+* { box-sizing: border-box; }
+body { background-color: #e9ecef; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+
+/* Paneles de botones y búsqueda */
+.panel-buscadores { max-width: 1000px; margin: 0 auto 20px auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; }
+.caja-busqueda { display: flex; gap: 20px; }
+.caja-busqueda label { display: block; font-weight: bold; font-size: 16px; margin-bottom: 5px; color: #333; }
+.caja-busqueda input { padding: 12px; font-size: 16px; border: 2px solid #ccc; border-radius: 5px; width: 180px; }
+.caja-controles { display: flex; gap: 10px; flex-wrap: wrap; }
+
+button { padding: 12px 20px; font-size: 15px; font-weight: bold; color: white; border: none; border-radius: 5px; cursor: pointer; transition: transform 0.2s; }
+button:hover { transform: scale(1.05); }
+.btn-oculto { display: none !important; } /* Oculta PDF e Imprimir al inicio */
+
+/* Formulario principal (Boleta Web) */
+.hoja-presupuesto { max-width: 1000px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.header-empresa { text-align: center; border-bottom: 3px solid #222; margin-bottom: 20px; padding-bottom: 15px; }
+.header-empresa img { width: 140px; margin-bottom: 10px; }
+.header-empresa h2 { margin: 0 0 5px 0; font-size: 26px; color: #111; }
+.header-empresa p { margin: 0; font-size: 16px; color: #555; }
+
+/* Cuadrículas de llenado de datos */
+.fila { display: flex; border-left: 2px solid #ccc; border-top: 2px solid #ccc; }
+.campo { border-right: 2px solid #ccc; border-bottom: 2px solid #ccc; padding: 12px; display: flex; flex-direction: column; background-color: #fafafa; }
+.campo label { font-size: 14px; font-weight: bold; color: #0056b3; margin-bottom: 8px; }
+.campo input, .campo textarea { width: 100%; border: 1px solid #aaa; border-radius: 4px; padding: 10px; font-size: 16px; background: #fff; }
+.campo textarea { resize: vertical; height: 80px; }
+.campo input:focus, .campo textarea:focus { border-color: #007bff; outline: none; box-shadow: 0 0 5px rgba(0,123,255,0.4); background: #eef6ff; }
+
+/* Tamaños flexibles */
+.flex-1 { flex: 1; } .flex-2 { flex: 2; } .flex-3 { flex: 3; } .flex-full { flex: 100%; }
+.franja-oscura { background: #343a40; color: #fff; font-size: 16px; font-weight: bold; padding: 10px; margin-top: 20px; text-align: center; border-radius: 4px 4px 0 0; }
+
+/* Botón Guardar Inferior */
+.panel-inferior { max-width: 1000px; margin: 30px auto; text-align: center; }
+#btn_guardar { background: #28a745; font-size: 20px; padding: 15px 40px; box-shadow: 0 4px 8px rgba(40,167,69,0.3); }
+
+/* ==================== MAGIA DE INVISIBILIDAD ==================== */
+/* 1. En la pantalla web, los textos legales NO existen */
+.solo-impresion { display: none !important; }
+
+/* 2. Cuando el botón PDF actúe, se vuelven visibles un segundo */
+.modo-impresion .solo-impresion { display: block !important; }
+
+/* Textos legales (Diseño físico) */
+.terminos-legales { font-size: 7.5px; line-height: 1.2; text-align: justify; margin-top: 15px; color: #000; }
+.terminos-legales ol { margin: 0; padding-left: 15px; }
+.estado-artefacto { font-size: 10px; margin-top: 25px; border-bottom: 1px solid #000; padding-bottom: 5px; }
+.subtitulo-retiro { font-size: 8px; font-weight: bold; margin-top: 5px; }
+.pie-firmas { display: flex; justify-content: space-between; margin-top: 45px; }
+.firma-caja { width: 22%; border-top: 1px solid #000; text-align: center; font-size: 10px; font-weight: bold; padding-top: 5px; }
+
+
+/* ==================== VISTA PARA PDF O IMPRESORA ==================== */
+@media print {
+    /* Desaparecen los botones de control */
+    .panel-buscadores, .panel-inferior { display: none !important; }
+    
+    /* Aparece el texto legal obligatoriamente */
+    .solo-impresion { display: block !important; }
+    
+    body { background: none; padding: 0; }
+    .hoja-presupuesto { border: none; width: 100%; max-width: 100%; padding: 0; box-shadow: none; }
+    
+    /* Achicamos todo para que quepa en la hoja A4/Carta */
+    .header-empresa { margin-bottom: 10px; padding-bottom: 5px; border-bottom: 2px solid #000; }
+    .header-empresa h2 { font-size: 20px; margin: 5px 0; }
+    .header-empresa p { font-size: 12px; }
+    
+    /* Bordes negros finos para imitar impresión antigua */
+    .fila { border-left: 1px solid #000; border-top: 1px solid #000; background: transparent; }
+    .campo { border-right: 1px solid #000; border-bottom: 1px solid #000; padding: 4px; background: transparent; }
+    .campo label { font-size: 9px; color: #000; margin-bottom: 2px; }
+    
+    /* Los cuadros de texto se vuelven transparentes como texto impreso */
+    .campo input, .campo textarea { border: none; background: transparent; padding: 0; font-size: 12px; color: #000; }
+    .campo textarea { height: 40px; }
+    .franja-oscura { font-size: 11px; padding: 5px; background: #222 !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; border-radius: 0; }
+}
+
+/* ==================== ESTILOS ENCABEZADO TIPO TALONARIO ==================== */
+.header-talonario {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.header-info-empresa {
+    flex: 2;
+    padding-right: 10px;
+    border-right: 1px solid #ccc;
+}
+
+.marcas-superiores {
+    font-size: 10px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+    color: #333;
+    font-style: italic;
+}
+
+.header-info-empresa h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 0 2px 0;
+    color: #000;
+}
+
+.rut-empresa {
+    font-weight: bold;
+    margin: 0 0 2px 0;
+    font-size: 13px;
+}
+
+.header-info-empresa p {
+    margin: 0;
+    font-size: 11px;
+    color: #333;
+}
+
+.sub-footer-empresa {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 8px;
+}
+
+.logo-texto-chico {
+    font-size: 9px;
+    line-height: 1;
+    border: 1px solid #000;
+    padding: 3px;
+    text-align: center;
+}
+
+.comuna-wsp p {
+    font-size: 11px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Centro: Número de orden rojo */
+.header-n-orden {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.etiqueta-n {
+    font-size: 24px;
+    color: red;
+    font-weight: bold;
+}
+
+.numero-rojo {
+    font-size: 28px;
+    color: red;
+    font-weight: bold;
+    font-family: monospace;
+}
+
+/* Derecha: Título y tabla de estado */
+.header-derecha {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 10px;
+    border-left: 1px solid #ccc;
+}
+
+.titulo-presupuesto {
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+.tabla-status {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 10px;
+}
+
+.tabla-status th {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #000;
+    padding: 3px;
+    font-size: 9px;
+}
+
+.tabla-status td {
+    border: 1px solid #000;
+    height: 18px;
+}
+
+/* Ajuste para los logos de las marcas superiores */
+.marcas-superiores {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+}
+
+.marcas-superiores img {
+    height: 16px; /* Ajusta la altura para que se alineen bien con el texto */
+    object-fit: contain;
+}
+
+.multi-marcas-txt {
+    font-size: 10px;
+    font-weight: bold;
+    font-style: italic;
+    color: #333;
+}
+
+/* Recuadro inferior izquierdo con tu Logo principal */
+.logo-recuadro {
+    border: none;
+    padding: 0;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+}
+
+.logo-recuadro img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Estilos para acomodar los logos en 2 filas de 3 elementos */
+.marcas-superiores {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 6px;
+}
+
+.fila-marcas {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.fila-marcas img {
+    height: 13px; /* Tamaño compacto y elegante para que encajen perfecto */
+    object-fit: contain;
+}
+
+.multi-marcas-txt {
+    font-size: 10px;
+    font-weight: bold;
+    font-style: italic;
+    color: #333;
+}
